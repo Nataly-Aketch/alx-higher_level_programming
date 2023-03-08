@@ -10,8 +10,6 @@ int check_cycle(listint_t *list)
 
 	while (head)
 	{
-		if (!list)
-			return (0);
 		if (head->next == list)
 			return (1);
 		head = head->next;
