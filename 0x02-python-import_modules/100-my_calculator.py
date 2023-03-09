@@ -5,6 +5,7 @@ len1 = len(sys.argv)
 if __name__ == "__main__":
     if len1 != 4:
         print("Usage: ./100-my_calculator.py <a> <operator> <b>")
+        sys.exit(1)
     else:
         for i in range(1, len1):
             a = int(sys.argv[1])
