@@ -1,20 +1,43 @@
 #include "lists.h"
 /**
- * search - searches a for a node
- * @head: head node
- * @idx: index to be searched
- * Return: node if found, NULL otherwise
+ * compare_list - compares two lists
+ * @head1: first linked list
+ * @head2: second linked list
+ * Return: 1 if they're the same,, 0 otherwise
  */
-listint_t *search(listint_t *head, unsigned int idx)
+int compare_list(listint_t *head1, listint_t *head2)
 {
-	unsigned int count = 0;
+	listint_t *temp1 = head1, *temp2 = head2;
 
-	while (head && idx > count)
+	while (temp1 && temp2)
 	{
-		head = head->next;
-		count++;
+		if (temp1->n != temp2->n)
+		{
+			return (0);
+		}
+		temp1 = temp1->next;
+		temp2 = temp2->next;
 	}
-	return (head);
+	return (1);
+}
+/**
+ * reverse - reverses a linked list
+ * @head: linked list to be reversed
+ * Return: reversed list
+ */
+listint_t *reverse(listint_t **head)
+{
+	listint_t *current = *head, *prev = NULL, *new = NULL;
+
+	while (current)
+	{
+		new = current->next;
+		current->next = prev;
+		prev = current;
+		current = new;
+	}
+	*head = prev;
+	return (prev);
 }
 /**
  * is_palindrome - checks if a linked list is a palindrome
@@ -23,8 +46,8 @@ listint_t *search(listint_t *head, unsigned int idx)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *temp, *last, *first;
-	int count = 0, flag = 0, sec_count;
+	listint_t *temp, *last, *slow = *head, *fast = *head;
+	int count = 0, flag = 0;
 
 	temp = *head;
 	while (temp)
@@ -32,21 +55,20 @@ int is_palindrome(listint_t **head)
 		temp = temp->next;
 		count++;
 	}
-	if (count == 0)
+	if (count == 0 || count == 1)
 		flag = 1;
 	else
 	{
-		sec_count = count - 1;
-		first = *head;
-		last = search(*head, sec_count);
-		while (first && last != first)
+		while (fast && fast->next)
 		{
-			if (first->n == last->n)
-				flag = 1;
-			sec_count--;
-			last = search(first, sec_count);
-			first = first->next;
+			fast = fast->next->next;
+			slow = slow->next;
 		}
+		last = reverse(&slow);
+		if (compare_list(*head, last) == 1)
+			flag = 1;
+		else
+			flag = 0;
 	}
 	return (flag);
 }
