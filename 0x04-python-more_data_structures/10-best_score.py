@@ -7,7 +7,8 @@ def best_score(a_dictionary):
         val = a_dictionary.get(k)
         if val is None:
             return None
-        list1 += [val]
+        else:
+            list1 += [val]
     large = list1[0]
     for i in list1:
         if i > large:
