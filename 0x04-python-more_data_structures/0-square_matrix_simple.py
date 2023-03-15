@@ -3,6 +3,6 @@ def square_matrix_simple(matrix=[]):
     for r in matrix:
         matrix2 = []
         for c in range(len(r)):
-            matrix2.append(r[c] ** 2)
-        matrix1.append(matrix2)
+            matrix2 += [r[c] ** 2]
+        matrix1 += [matrix2]
     return matrix1
