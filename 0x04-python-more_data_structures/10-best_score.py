@@ -5,6 +5,8 @@ def best_score(a_dictionary):
         return None
     for k, v in a_dictionary.items():
         val = a_dictionary.get(k)
+        if val is None:
+            return None
         list1 += [val]
     large = list1[0]
     for i in list1:
