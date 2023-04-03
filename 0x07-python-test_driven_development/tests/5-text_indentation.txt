@@ -1,0 +1,66 @@
+The ``text_indentation module``
+=============================
+
+Using ``text_indentation``
+--------------------------
+
+First import ``text_indentation`` from ``5-text_indetation.py``
+
+	>>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Now use it:
+
+Functionality:
+
+	>>> text_indentation("Why? So: serious.")
+	Why?
+	<BLANKLINE>
+	So:
+	<BLANKLINE>
+	serious.
+	<BLANKLINE>
+	<BLANKLINE>
+
+Case None:
+
+	>>> text_indentation(None)
+	Traceback (most recent call last):
+	...
+	TypeError: 'Nonetype' object is not iterable
+
+Case not string:
+
+	>>> text_indentation(3)
+	Traceback (most recent call last):
+	...
+	TypeError: text must be a string
+
+Case no delimiter:
+
+	>>> text_indentation("3")
+	3
+
+Case 1 delimeter:
+
+	>>> text_indentation("?")
+	?
+	<BLANKLINE>
+	<BLANKLINE>
+
+Case all 3 delimeters:
+
+	>>> text_indentation("?.:")
+	?
+	<BLANKLINE>
+	.
+	<BLANKLINE>
+	:
+	<BLANKLINE>
+	<BLANKLINE>
+
+Case no args:
+
+	>>> text_indentation()
+	Traceback (most recent call last):
+	...
+	TypeError: text_indentation() missing 1 required positional argument: 'text'
