@@ -4,7 +4,7 @@
 
 class Rectangle:
     """Defines a rectangle based on task 1"""
-    def __init__(self, width, height):
+    def __init__(self, width=0, height=0):
         """Initializes a class rectangle"""
         self.width = width
         self.height = height
@@ -39,6 +39,6 @@ class Rectangle:
 
     def perimeter(self):
         """computes perimiter od a rectangle"""
-        if 0 in (self.__width, self.__height):
+        if self.__width == 0 or self.__height == 0:
             return 0
         return 2 * (self.__width + self.__height)
