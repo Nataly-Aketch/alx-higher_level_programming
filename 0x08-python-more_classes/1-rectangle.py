@@ -6,8 +6,8 @@ class Rectangle:
     """This class defines a rectangle base on task 0"""
     def __init__(self, width=0, height=0):
         """this method initializes a class Rectangle"""
-        self.__height = height
         self.__width = width
+        self.__height = height
 
     @property
     def height(self):
