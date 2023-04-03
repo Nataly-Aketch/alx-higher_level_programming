@@ -49,8 +49,4 @@ class Rectangle:
             + "#" * self.__width
 
     def __repr__(self):
-        return 'Rectangle(' + str(self.__width) + ',' + str(self.__height) + ')'
-        '''if self.__height == 0 or self.__width == 0:
-            return ""
-        return (self.__height - 1) * ("#" * self.__width + '\n') \
-            + "#" * self.__width'''
+        return 'Rectangle(' + str(self.width) + ',' + str(self.height) + ')'
