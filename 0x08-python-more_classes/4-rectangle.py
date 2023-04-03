@@ -49,4 +49,4 @@ class Rectangle:
             + "#" * self.__width
 
     def __repr__(self):
-        return "Rectangle(" + repr(self.width) + "," + repr(self.height) + ")"
+        return "Rectangle(" + str(self.width) + ", " + str(self.height) + ")"
