@@ -22,6 +22,13 @@ Case int:
 	...
 	TypeError: last_name must be a string
 
+Case first_name not string:
+
+	>>> say_my_name(12, "Papa")
+	Traceback (most recent call last):
+	...
+	TypeError: first_name must be a string
+
 Case no positional args:
 
 	>>> say_my_name()

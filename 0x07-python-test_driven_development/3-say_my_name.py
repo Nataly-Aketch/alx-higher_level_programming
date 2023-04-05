@@ -4,10 +4,9 @@
 
 def say_my_name(first_name, last_name=""):
     """Prints my name is first_name last_name"""
-    #if not (isinstance(first_name, str) or isinstance(last_name, str)):
     list1 = [first_name, last_name]
     for w in range(len(list1)):
         if not isinstance(list1[w], str):
             raise TypeError("{} must be a string"
-                    .format("first_name" if w == 0 else "last_name"))
+                            .format("first_name" if w == 0 else "last_name"))
     print("My name is {} {}".format(first_name, last_name))
