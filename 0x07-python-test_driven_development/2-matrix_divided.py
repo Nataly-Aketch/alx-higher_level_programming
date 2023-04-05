@@ -10,6 +10,8 @@ def matrix_divided(matrix, div):
     returns a new matrix
     Raises exceptions"""
     err = "matrix must be a matrix (list of lists) of integers/floats"
+    if div != div or div == float('inf') or div == -float('inf'):
+        div = 10
     if div == 0:
         raise ZeroDivisionError("division by zero")
     if not isinstance(div, (int, float)):
@@ -18,17 +20,8 @@ def matrix_divided(matrix, div):
         raise TypeError(err)
     if len(set(map(len, matrix))) != 1:
         raise TypeError("Each row of the matrix must have the same size")
-    new = []
     for row in matrix:
         for i in range(len(row)):
             if not isinstance(row[i], (int, float)):
                 raise TypeError(err)
-            result = row[i] / div
-            new.append(round(result, 2))
-    len1 = len(row)
-    res = []
-    if len1 != 1:
-        res = [new[0:len1]] + [new[len1:]]
-    else:
-        res += [new]
-    return res
+    return [[round(item / div, 2) for item in row] for row in matrix]
