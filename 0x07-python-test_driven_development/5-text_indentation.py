@@ -10,14 +10,14 @@ def text_indentation(text):
         raise TypeError("'Nonetype' object is not iterable")
     if not isinstance(text, str):
         raise TypeError("text must be a string")
-    delim = ['?', '.', ':']
+    delim = '?.:'
     buff = ""
     for c in text:
-        if c not in delim:
-            buff += c
-        else:
+        if c in delim:
             buff += c + "\n\n"
+        else:
+            buff += c
 
-    new_str = buff.split("\n")
+    new_str = buff.split('\n')
     for w in new_str:
         print(w.strip())
