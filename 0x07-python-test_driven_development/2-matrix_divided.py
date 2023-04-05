@@ -10,8 +10,6 @@ def matrix_divided(matrix, div):
     returns a new matrix
     Raises exceptions"""
     err = "matrix must be a matrix (list of lists) of integers/floats"
-    if div != div or div == float('inf') or div == -float('inf'):
-        div = 10
     if div == 0:
         raise ZeroDivisionError("division by zero")
     if not isinstance(div, (int, float)):
