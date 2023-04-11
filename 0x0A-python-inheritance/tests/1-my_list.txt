@@ -1,0 +1,36 @@
+The ``my_list module``
+======================
+
+	>>> MyList = __import__('1-my_list').MyList
+	>>> list1 = MyList()
+	>>> list1.append(2)
+	>>> list1.append(1)
+	>>> list1.append(5)
+	>>> list1.append(4)
+	>>> list1.print_sorted()
+	[1, 2, 4, 5]
+	>>> list2 = MyList()
+	>>> list2 = list(range(-5, 0))
+	>>> print(list2)
+	[-5, -4, -3, -2, -1]
+	>>> list3 = MyList()
+	>>> list3.append(-2)
+	>>> list3.append(-4)
+	>>> list3.append(-8)
+	>>> list3.print_sorted()
+	[-8, -4, -2]
+	>>> list4 = MyList()
+	>>> list4.append("Lolo")
+	>>> list4.append(6)
+	>>> list4.print_sorted()
+	Traceback (most recent call last):
+	...
+	TypeError: '<' not supported between instances of 'int' and 'str'
+	>>> list4 = MyList()
+	>>> list4.append()
+	Traceback (most recent call last):
+	...
+	TypeError: append() takes exactly one argument (0 given)
+	>>> list4 = MyList()
+	>>> print(list4)
+	[]
