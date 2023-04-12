@@ -31,6 +31,8 @@ The ``my_list module``
 	Traceback (most recent call last):
 	...
 	TypeError: append() takes exactly one argument (0 given)
-	>>> list4 = MyList()
-	>>> print(list4)
+	>>> list5 = MyList()
+	>>> print(list5)
+	[]
+	>>> list5.print_sorted()
 	[]
