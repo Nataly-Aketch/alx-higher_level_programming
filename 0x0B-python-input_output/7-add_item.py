@@ -10,6 +10,6 @@ if __name__ == '__main__':
 
     try:
         load_from_json_file("add_item.json")
-    except Exception as e:
+    except FileNotFoundError:
         pass
     save_to_json_file(sys.argv[1:], "add_item.json")
