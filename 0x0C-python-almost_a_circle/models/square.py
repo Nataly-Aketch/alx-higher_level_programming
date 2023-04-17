@@ -7,16 +7,16 @@ class Square(Rectangle):
     """inherits all attributes of class Rectangle"""
     def __init__(self, size, x=0, y=0, id=None):
         """initializes square"""
-        super().__init__(size, size, x, y, id=None)
+        super().__init__(size, size, x, y, id)
 
     @property
     def size(self):
-        return super().width
+        return self.width
 
     @size.setter
     def size(self, value):
-        Rectangle.width.fset(self, value)
-        Rectangle.height.fset(self, value)
+        self.width = value
+        self.height = value
 
     def update(self, *args, **kwargs):
         """updates the class"""
@@ -50,8 +50,7 @@ class Square(Rectangle):
 
     def to_dictionary(self):
         """returns dictionary representation of the class"""
-        return {'id': self.id, 'width': self.width,
-                'height': self.height, 'x': self.x, 'y': self.y}
+        return {'id': self.id, 'size': self.size, 'x': self.x, 'y': self.y}
 
     def __str__(self):
         """returns string representation of the class"""

@@ -32,11 +32,11 @@ class TestBase(unittest.TestCase):
     def test_tuple(self):
         b = Base((1, 2, 3))
         self.assertEqual(b.id, (1, 2, 3))
-    
+
     def test_float(self):
         b = Base(1.33)
         self.assertEqual(b.id, 1.33)
-    
+
     def test_tuple(self):
         b = Base({1: 1, 2: 2, 3: 3})
         self.assertEqual(b.id, {1: 1, 2: 2, 3: 3})
