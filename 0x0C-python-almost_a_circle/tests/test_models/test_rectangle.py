@@ -5,6 +5,7 @@ from models.rectangle import Rectangle
 from io import StringIO
 import io
 from contextlib import redirect_stdout
+import os
 
 
 class TestInitializer(unittest.TestCase):
@@ -38,15 +39,23 @@ class TestInitializer(unittest.TestCase):
 
 class TestWidth_height(unittest.TestCase):
     """tests width and height"""
-    def test_string(self):
+    def test_w_string(self):
         with self.assertRaises(TypeError):
             r = Rectangle("2", 3)
 
-    def test_value(self):
+    def test_h_value(self):
         with self.assertRaises(ValueError):
             r = Rectangle(3, -3)
 
-    def test_value1(self):
+    def test_w_value(self):
+        with self.assertRaises(ValueError):
+            r = Rectangle(-3, 3)
+
+    def test_h_value1(self):
+        with self.assertRaises(ValueError):
+            r = Rectangle(3, 0)
+
+    def test_w_value1(self):
         with self.assertRaises(ValueError):
             r = Rectangle(0, 3)
 
@@ -73,11 +82,11 @@ class TestWidth_height(unittest.TestCase):
 
 class Testx_y(unittest.TestCase):
     """tests x and y"""
-    def test_value(self):
+    def test_x_value(self):
         with self.assertRaises(ValueError):
             r = Rectangle(3, 3, -9, 19)
 
-    def test_string(self):
+    def test_y_string(self):
         with self.assertRaises(TypeError):
             r = Rectangle(3, 7, 3, "3")
 
@@ -93,8 +102,12 @@ class Testx_y(unittest.TestCase):
         with self.assertRaises(TypeError):
             r = Rectangle(3, 7, None, 3)
 
+    def test_y_value(self):
+        with self.assertRaises(ValueError):
+            r = Rectangle(3, 3, 9, -19)
 
-class TestMethods1(unittest.TestCase):
+
+class Test_Area_Str_Display(unittest.TestCase):
     """tests all public instance methods"""
     def test_area(self):
         r = Rectangle(3, 4)
@@ -111,8 +124,8 @@ class TestMethods1(unittest.TestCase):
             r.area(1)
 
     def test_str(self):
-        r3 = Rectangle(3, 4, 11, 12)
-        self.assertEqual("[Rectangle] (13) 11/12 - 3/4", str(r3))
+        r3 = Rectangle(3, 4, 11, 12, 29)
+        self.assertEqual("[Rectangle] (29) 11/12 - 3/4", str(r3))
 
     def test_str_args(self):
         r = Rectangle(1, 2)
@@ -144,7 +157,7 @@ class TestUpdate(unittest.TestCase):
     def test_args_none(self):
         r = Rectangle(1, 2, 3, 4)
         r.update(None)
-        self.assertEqual("[Rectangle] (17) 3/4 - 1/2", str(r))
+        self.assertEqual("[Rectangle] (16) 3/4 - 1/2", str(r))
 
     def test_kwargs1(self):
         r = Rectangle(21, 22)
@@ -167,4 +180,96 @@ class TestUpdate(unittest.TestCase):
         expected = "{'id': 21, 'width': 10, 'height': 2, 'x': 1, 'y': 9}"
         with io.StringIO() as buf, redirect_stdout(buf):
             print(new_r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+
+class TestCreateMethod(unittest.TestCase):
+    """tests create class method"""
+    def test_1_param(self):
+        r = Rectangle.create(**{'id': 89})
+        expected = '[Rectangle] (89) 0/0 - 1/1'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            print(r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+    def test_2_param(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1})
+        expected = '[Rectangle] (89) 0/0 - 1/1'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            print(r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+    def test_3_param(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2})
+        expected = '[Rectangle] (89) 0/0 - 1/2'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            print(r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+    def test_4_param(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3})
+        expected = '[Rectangle] (89) 3/0 - 1/2'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            print(r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+    def test_5_param(self):
+        r = Rectangle.create(**{'id': 89, 'width': 1, 'height': 2, 'x': 3,
+                             'y': 4})
+        expected = '[Rectangle] (89) 3/4 - 1/2'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            print(r, end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+
+class Test_Save_to_file(unittest.TestCase):
+    """test cases for class method save to file"""
+    def test_none(self):
+        r = Rectangle.save_to_file(None)
+        expected = '[]'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            with open(r, 'r') as f:
+                print(f.read(), end="")
+            self.assertEqual(buf.getvalue(), expected)
+    
+    def test_empty_list(self):
+        r = Rectangle.save_to_file([])
+        expected = '[]'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            with open(r, 'r') as f:
+                print(f.read(), end="")
+            self.assertEqual(buf.getvalue(), expected)
+    
+    def test_list(self):
+        r = Rectangle.save_to_file([Rectangle(1, 2)])
+        expected = '[{"id": 37, "width": 1, "height": 2, "x": 0, "y": 0}]'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            with open(r, 'r') as f:
+                print(f.read(), end="")
+            self.assertEqual(buf.getvalue(), expected)
+
+
+class Test_Load_From_file(unittest.TestCase):
+    """test cases for class method load_from_file"""
+    def tearDown(self):
+        try:
+            self.addCleanup(os.remove, 'Rectangle.json')
+        except Exception:
+            pass
+    
+    def test_file_exists(self):
+        r_output = Rectangle.load_from_file()
+        expected = ''
+        with io.StringIO() as buf, redirect_stdout(buf):
+            for rect in r_output:
+                print(rect, end="")
+            self.assertEqual(buf.getvalue(), expected)
+    
+    def test_file_is_no(self):
+        r_input = Rectangle.save_to_file([Rectangle(1, 2)])
+        r_output = Rectangle.load_from_file()
+        expected = '[Rectangle] (35) 0/0 - 1/2'
+        with io.StringIO() as buf, redirect_stdout(buf):
+            for rect in r_output:
+                print(rect, end="")
             self.assertEqual(buf.getvalue(), expected)
